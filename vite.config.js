@@ -32,6 +32,13 @@ export default defineConfig({
         // cache the Google Fonts the app pulls in, so it works offline after first load
         runtimeCaching: [
           {
+            // recipe photos live in /recipes/*.jpg (kept out of precache to stay lean);
+            // cache them on first view so the app still shows images offline
+            urlPattern: ({ url }) => url.pathname.startsWith("/recipes/"),
+            handler: "CacheFirst",
+            options: { cacheName: "recipe-photos", expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 365 } }
+          },
+          {
             urlPattern: ({ url }) => url.origin === "https://fonts.googleapis.com",
             handler: "StaleWhileRevalidate",
             options: { cacheName: "google-fonts-stylesheets" }
