@@ -42,3 +42,16 @@ window.storage = {
     });
   },
 };
+
+/* iOS/Safari can evict IndexedDB: a plain browser tab clears script-writable
+   storage after ~7 days of no interaction, and even an installed PWA can be
+   reclaimed under storage pressure. Asking for persistent storage exempts us
+   from that eviction. Best-effort — Safari grants it heuristically (more
+   likely once the app is added to the home screen), so this can resolve
+   false; we just try and move on. */
+if (typeof navigator !== "undefined" && navigator.storage && navigator.storage.persist) {
+  navigator.storage.persisted()
+    .then((already) => { if (!already) return navigator.storage.persist(); })
+    .then((granted) => { if (granted === false) console.info("[storage] persistent storage not granted yet — data may be evicted on iOS"); })
+    .catch(() => {});
+}
