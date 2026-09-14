@@ -1,3 +1,10 @@
+# Projects in this repo
+
+- **`/` — Mimi's Recipe Box** (below).
+- **`/sustainable-fashion` — Weft**, a sustainable-fashion learning and shopping app. See `sustainable-fashion/README.md`.
+
+---
+
 # Mimi's Recipe Box — installable web app (PWA)
 
 A self-contained React app: Pantry, Test Kitchen, and Menus, with a grocery-list
