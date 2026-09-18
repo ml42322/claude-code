@@ -4,14 +4,15 @@ import { SOURCES, sourceIndex } from "../data/sources.js";
 /* ---------- navigation (hash router) ---------- */
 export const nav = (path) => { window.location.hash = path.startsWith("#") ? path : "#" + path; };
 export const back = (fallback = "/") => {
-  if (window.history.length > 1 && sessionStorage.getItem("weft-nav") === "1") window.history.back();
+  let seen = false; try { seen = sessionStorage.getItem("weft-nav") === "1"; } catch {}
+  if (window.history.length > 1 && seen) window.history.back();
   else nav(fallback);
 };
 export function useRoute() {
   const parse = () => (window.location.hash.replace(/^#/, "") || "/").split("?")[0];
   const [path, setPath] = useState(parse);
   useEffect(() => {
-    const h = () => { sessionStorage.setItem("weft-nav", "1"); setPath(parse()); window.scrollTo({ top: 0 }); };
+    const h = () => { try { sessionStorage.setItem("weft-nav", "1"); } catch {} setPath(parse()); window.scrollTo({ top: 0 }); };
     window.addEventListener("hashchange", h);
     return () => window.removeEventListener("hashchange", h);
   }, []);

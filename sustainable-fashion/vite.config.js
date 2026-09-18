@@ -2,12 +2,15 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
+const STATIC = process.env.WEFT_STATIC === "1"; // relative paths, no service worker
+
 export default defineConfig({
   // Deploying to a subfolder (e.g. GitHub Pages at /repo-name/)? Set base: "/repo-name/".
-  base: "/",
+  base: STATIC ? "./" : "/",
+  build: { outDir: STATIC ? "dist-static" : "dist" },
   plugins: [
     react(),
-    VitePWA({
+    !STATIC && VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg", "apple-touch-icon.png"],
       manifest: {
@@ -42,5 +45,5 @@ export default defineConfig({
         ]
       }
     })
-  ]
+  ].filter(Boolean)
 });

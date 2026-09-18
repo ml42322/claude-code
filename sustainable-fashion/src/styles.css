@@ -26,7 +26,7 @@
   color-scheme: light dark;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #15170F;
     --surface: #1F221A;
     --surface-2: #272B21;
@@ -49,6 +49,29 @@
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
   }
 }
+:root[data-theme="dark"] {
+    --bg: #15170F;
+    --surface: #1F221A;
+    --surface-2: #272B21;
+    --line: #363B2E;
+    --ink: #EFEBE2;
+    --muted: #A5A398;
+    --moss: #8CC79A;
+    --moss-soft: #22392A;
+    --clay: #E88C68;
+    --clay-soft: #47291D;
+    --ochre: #E4B85B;
+    --ochre-soft: #3E3315;
+    --sky: #86B4DA;
+    --sky-soft: #1F3140;
+    --plum: #B99FE0;
+    --plum-soft: #2E2440;
+    --good: #7FCB98;
+    --warn: #E4B85B;
+    --bad: #F08A7B;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
@@ -98,7 +121,8 @@ p { margin: 0; line-height: 1.5; }
 
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: var(--surface-2); font-size: 13px; font-weight: 500; border: 1px solid transparent; white-space: nowrap; transition: background .15s, border-color .15s; }
 .chip.on { background: var(--moss); color: #fff; }
-@media (prefers-color-scheme: dark) { .chip.on { color: #0f130f; } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chip.on { color: #0f130f; } }
+:root[data-theme="dark"] .chip.on { color: #0f130f; }
 .chip.soft { background: var(--moss-soft); color: var(--moss); }
 .chip.clay { background: var(--clay-soft); color: var(--clay); }
 .chip.ochre { background: var(--ochre-soft); color: var(--ochre); }
@@ -115,7 +139,8 @@ p { margin: 0; line-height: 1.5; }
 .btn.wide { width: 100%; }
 .btn.ghost { background: var(--surface-2); color: var(--ink); }
 .btn.sm { padding: 8px 12px; font-size: 13px; border-radius: 10px; }
-@media (prefers-color-scheme: dark) { .btn { color: #0f130f; } .btn.ghost { color: var(--ink); } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn { color: #0f130f; } :root:not([data-theme="light"]) .btn.ghost { color: var(--ink); } }
+:root[data-theme="dark"] .btn { color: #0f130f; } :root[data-theme="dark"] .btn.ghost { color: var(--ink); }
 
 .hero { border-radius: 24px; padding: 22px 20px; color: #fff; position: relative; overflow: hidden; background: linear-gradient(135deg, #2F5D3A, #17361f); }
 .hero h1 { color: #fff; font-size: 30px; }
